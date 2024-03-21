@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/21 16:34:38 by gsilva           ###   ########.fr       */
+/*   Created: 2022/10/14 13:06:28 by gsilva            #+#    #+#             */
+/*   Updated: 2022/12/06 13:17:04 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../include/libft.h"
 
-# include <mlx.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft.h"
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*newlist;
 
-
-
-#endif
+	newlist = (t_list *)malloc(sizeof(t_list));
+	if (!newlist)
+		return (NULL);
+	newlist->content = content;
+	newlist->next = NULL;
+	return (newlist);
+}

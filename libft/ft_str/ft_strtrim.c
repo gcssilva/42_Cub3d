@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/21 16:34:38 by gsilva           ###   ########.fr       */
+/*   Created: 2022/10/11 09:54:53 by gsilva            #+#    #+#             */
+/*   Updated: 2022/12/06 13:14:49 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../include/libft.h"
 
-# include <mlx.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft.h"
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	size_t	start;
+	size_t	end;
 
-
-
-#endif
+	if (!s1 || !set)
+		return (NULL);
+	start = 0;
+	end = ft_strlen((char *)s1);
+	while (ft_strchr(set, s1[start]))
+		start++;
+	while (end > start && ft_strchr(set, s1[end]))
+		end--;
+	return (ft_substr(s1, start, (end - start) + 1));
+}

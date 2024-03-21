@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/21 16:34:38 by gsilva           ###   ########.fr       */
+/*   Created: 2022/12/06 16:27:57 by gsilva            #+#    #+#             */
+/*   Updated: 2022/12/06 17:02:58 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../include/libft.h"
 
-# include <mlx.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft.h"
+int	ft_putnbr_base(unsigned long n, char *base)
+{
+	int	printed;
 
-
-
-#endif
+	printed = 0;
+	if (n / 16 > 0)
+		printed += (ft_putnbr_base((n / ft_strlen(base)), base));
+	printed += ft_putchar_fd(base[n % 16], 1);
+	return (printed);
+}

@@ -1,19 +1,25 @@
 NAME	=	cub3d
 CC		=	cc
 LIB		=	/usr/local
-CFLAGS	=	-L $(LIB)/inc -lmlx -L $(LIB)/lib -lXext -lX11 -lm
-SRC		=	src/main.c
+CFLAGS	=	-L libft -lft -L $(LIB)/inc -lmlx -L $(LIB)/lib -lXext -lX11 -lm
+SRC		=	src/main.c src/parse/parse_map.c
 OBJ		=	$(SRC:.c=.o)
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
+			@cd libft && make
+			@cd ..
 			@$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
 
 clean:
+			@cd libft && make clean
+			@cd ..
 			@rm -f $(OBJ)
 
 fclean:		clean
+			@cd libft && make fclean
+			@cd ..
 			@rm -f $(NAME)
 
 re:			fclean

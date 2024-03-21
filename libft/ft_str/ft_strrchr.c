@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/21 16:34:38 by gsilva           ###   ########.fr       */
+/*   Created: 2022/08/13 10:48:43 by gsilva            #+#    #+#             */
+/*   Updated: 2022/12/06 13:14:42 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../include/libft.h"
 
-# include <mlx.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft.h"
+char	*ft_strrchr(const char *s, int c)
+{
+	size_t	i;
 
-
-
-#endif
+	i = ft_strlen((char *)s);
+	while ((unsigned char)s[i] != (unsigned char)c && i > 0)
+		i--;
+	if ((unsigned char)s[i] != (unsigned char)c)
+		return (NULL);
+	return ((char *)&s[i]);
+}

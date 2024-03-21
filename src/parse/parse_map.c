@@ -1,24 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/21 16:34:38 by gsilva           ###   ########.fr       */
+/*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
+/*   Updated: 2024/03/21 17:03:44 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../../inc/cub3d.h"
 
-# include <mlx.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft.h"
+int	check_ext(char *file)
+{
+	if (ft_strlen(file) < 5)
+		return (0);
+	*file += ft_strlen(file) - 4;
+	if (!ft_strncmp(file, ".cub", 5))
+		return (1);
+	return (0);
+}
 
+int	read_map(char *file)
+{
+	char	*line;
+	int		fd;
 
-
-#endif
+	fd = open(file, O_WRONLY);
+	if (fd < 0)
+		return (0);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		free(line);
+	}
+}
