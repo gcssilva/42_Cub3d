@@ -6,24 +6,26 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:14 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/21 17:11:04 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/03/22 16:45:07 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
+t_map	*map(void)
+{
+	static t_map	_map;
+
+	return (&_map);
+}
+
 int	main(int argc, char **argv)
 {
-	void	*mlx;
-	void	*win;
-
-	mlx = mlx_init();
 	if (!check_ext(argv[1]))
-		return (0);
-	win = mlx_new_window(mlx, 200, 200, argv[1]);
-	while (1)
-	{
-		continue ;
-	}
+		ft_printf("Invalid map file extension\n");
+	if (fill_el(argv[1]) == -1)
+		ft_printf("Invalid map elements\n");
+	else
+		ft_printf("Map ok\n");
 	return (0);
 }

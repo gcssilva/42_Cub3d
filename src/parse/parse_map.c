@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/21 17:13:29 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/03/22 16:34:03 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,10 @@ int	check_ext(char *file)
 	return (0);
 }
 
-int	read_map(char *file)
+int	ft_isspace(int c)
 {
-	char	*line;
-	int		fd;
-
-	fd = open(file, O_WRONLY);
-	if (fd < 0)
-		return (0);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		free(line);
-	}
+	if ((c >= 9 && c <= 12) || c == 32)
+		return (1);
+	return (0);
 }
+
