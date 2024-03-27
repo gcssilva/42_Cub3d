@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/22 16:40:32 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:46:19 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_map
 {
 	char	*elements[7];
 	char	**map;
+	int		l;
+	int		lines;
 }	t_map;
 
 t_map	*map(void);
@@ -33,8 +35,8 @@ int		ft_isspace(int c);
 
 //parse_el
 int		el_filled(void);
-int		add_el(char *s, int i);
-int		check_el(char *s);
+int		add_el(char *s, int i, int l);
+int		check_el(char *s, int l);
 int		fill_el(char *file);
 
 #endif

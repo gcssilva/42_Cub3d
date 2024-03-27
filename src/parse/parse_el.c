@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:45 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/22 17:08:16 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:39:52 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	el_filled(void)
 	return (1);
 }
 
-int	add_el(char *s, int i)
+int	add_el(char *s, int i, int l)
 {
 	if (i > 6)
 	{
@@ -38,10 +38,11 @@ int	add_el(char *s, int i)
 	if (map()->elements[i])
 		return (-1);
 	map()->elements[i] = ft_strdup(s);
+	map()->l = l;
 	return (0);
 }
 
-int	check_el(char *s)
+int	check_el(char *s, int l)
 {
 	int	i;
 
@@ -62,14 +63,16 @@ int	check_el(char *s)
 		i = 5;
 	else if (*s == 0)
 		i = 6;
-	return (add_el(s, i));
+	return (add_el(s, i, l));
 }
 
 int	fill_el(char *file)
 {
 	char	*line;
 	int		fd;
+	int		l;
 
+	l = -1;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (-1);
@@ -82,7 +85,7 @@ int	fill_el(char *file)
 				return (0);
 			return (-1);
 		}
-		if (check_el(line) == -1)
+		if (check_el(line, ++l) == -1)
 		{
 			free(line);
 			return (-1);
