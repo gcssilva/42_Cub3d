@@ -6,11 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:45 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/27 21:39:52 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/01 16:25:07 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+
+int	map_lines(int l)
+{
+	map()->lines = l - map()->l;
+	return (0);
+}
 
 int	el_filled(void)
 {
@@ -82,7 +88,7 @@ int	fill_el(char *file)
 		if (!line)
 		{
 			if (el_filled())
-				return (0);
+				return (map_lines(l));
 			return (-1);
 		}
 		if (check_el(line, ++l) == -1)

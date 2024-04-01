@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/03/27 21:45:07 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:53:31 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_isspace(int c)
 	return (0);
 }
 
-int	parse_map(char *file)
+int	fill_map(char *file)
 {
 	int		i;
 	int		fd;
@@ -39,13 +39,51 @@ int	parse_map(char *file)
 	if (fill_el(file) == -1)
 		return (-1);
 	fd = open(file, O_RDONLY);
-	while (i <= map()->l)
+	while (i++ <= map()->l)
 	{
 		line = get_next_line(fd);
 		free(line);
 	}
-	while (1)
+	map()->map = (char **)malloc(sizeof(char *) * (map()->lines + 1));
+	i = -1;
+	while (++i <= map()->lines)
+		map()->map[i] = get_next_line(fd);
+	map()->map[i] = NULL;
+	close(fd);
+	map()->p = 0;
+	return (parse_map());
+}
+
+int	is_valid_char(int c)
+{
+	if (c != '1' && c != '0' && c != 'W' && c != 'E'
+		&& c != 'N' && c != 'S' && !ft_isspace(c))
+		return (0);
+	if (c == 'W' || c == 'E' || c == 'N' || c == 'S')
 	{
-		line
+		if (map()->p != 0)
+			return (0);
+		map()->p = c;
 	}
+	return (1);
+}
+
+int	parse_map(void)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (map()->map[++i])
+	{
+		j = -1;
+		while (map()->map[i][++j])
+		{
+			if (!is_valid_char(map()->map[i][j]))
+				return (-1);
+		}
+	}
+	if (map()->p == 0)
+		return (-1);
+	return (parse_path());
 }
