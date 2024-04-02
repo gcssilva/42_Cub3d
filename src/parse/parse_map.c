@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/01 17:53:31 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/02 14:49:25 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	fill_map(char *file)
 	if (fill_el(file) == -1)
 		return (-1);
 	fd = open(file, O_RDONLY);
-	while (i++ <= map()->l)
+	while (i++ <= map()->last_elem)
 	{
 		line = get_next_line(fd);
 		free(line);
@@ -47,7 +47,7 @@ int	fill_map(char *file)
 	map()->map = (char **)malloc(sizeof(char *) * (map()->lines + 1));
 	i = -1;
 	while (++i <= map()->lines)
-		map()->map[i] = get_next_line(fd);
+		map()->map[i] = fill_line(fd);
 	map()->map[i] = NULL;
 	close(fd);
 	map()->p = 0;

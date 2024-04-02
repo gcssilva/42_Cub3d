@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:45 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/01 16:25:07 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/02 13:51:10 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	map_lines(int l)
 {
-	map()->lines = l - map()->l;
+	map()->lines = l - map()->last_elem;
 	return (0);
 }
 
@@ -44,7 +44,7 @@ int	add_el(char *s, int i, int l)
 	if (map()->elements[i])
 		return (-1);
 	map()->elements[i] = ft_strdup(s);
-	map()->l = l;
+	map()->last_elem = l;
 	return (0);
 }
 
@@ -91,6 +91,8 @@ int	fill_el(char *file)
 				return (map_lines(l));
 			return (-1);
 		}
+		if (ft_strlen(line) > map()->max_len)
+			map()->max_len = ft_strlen(line);
 		if (check_el(line, ++l) == -1)
 		{
 			free(line);
