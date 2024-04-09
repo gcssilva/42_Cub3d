@@ -6,11 +6,18 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:14 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/01 17:16:23 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/09 16:23:22 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+t_mlx	*mlx(void)
+{
+	static t_mlx	_mlx;
+
+	return (&_mlx);
+}
 
 t_map	*map(void)
 {

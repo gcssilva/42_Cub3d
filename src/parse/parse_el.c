@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:45 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/02 13:51:10 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/09 16:33:21 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ int	add_el(char *s, int i, int l)
 		return (0);
 	if (map()->elements[i])
 		return (-1);
+	s += 2;
+	while (ft_isspace(*s))
+		s++;
 	map()->elements[i] = ft_strdup(s);
+	map()->elements[i][ft_strlen(s) - 1] = 0;
 	map()->last_elem = l;
 	return (0);
 }

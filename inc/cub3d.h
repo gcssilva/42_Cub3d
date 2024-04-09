@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/02 14:45:30 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/09 16:21:28 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ typedef struct s_map
 	int		p;
 }	t_map;
 
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*win;
+	void	*no_tex;
+	void	*so_tex;
+	void	*ea_tex;
+	void	*we_tex;
+}	t_mlx;
+
+t_mlx	*mlx(void);
 t_map	*map(void);
 
 //parse_map
@@ -43,6 +54,7 @@ char	*fill_line(int fd);
 
 //parse_path
 int		parse_path(void);
+int		inv_path(int c);
 int		find_path(int y, int x);
 
 //parse_el
@@ -51,5 +63,9 @@ int		el_filled(void);
 int		add_el(char *s, int i, int l);
 int		check_el(char *s, int l);
 int		fill_el(char *file);
+
+//image.c
+void	create_img(void);
+int		check_img(void);
 
 #endif

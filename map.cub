@@ -1,13 +1,18 @@
-NO 
-SO 
+NO ./textures/test_wall_1.xpm
+SO ./textures/test_wall_2.xpm
+WE ./textures/test_wall_4.xpm
+EA ./textures/test_wall_3.xpm
 F 
-EA 
 C 
-WE 
+
+
+
+
+
 
     1
-   101
+   1W1
   10001
  1000001
-1000S0001
-111111111
+100000001
+ 1111111
