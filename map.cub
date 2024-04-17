@@ -1,7 +1,7 @@
-NO ./textures/test_wall_1.xpm
-SO ./textures/test_wall_2.xpm
-WE ./textures/test_wall_4.xpm
-EA ./textures/test_wall_3.xpm
+NO ./textures/north.xpm
+SO ./textures/south.xpm
+WE ./textures/west.xpm
+EA ./textures/east.xpm
 F 
 C 
 
