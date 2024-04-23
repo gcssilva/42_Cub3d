@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/09 16:21:28 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:33:30 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_map
 	int		lines;
 	int		max_len;
 	int		p;
+	int		c_rgb[3];
+	int		f_rgb[3];
 }	t_map;
 
 typedef struct s_mlx
@@ -51,6 +53,8 @@ int		is_valid_char(int c);
 
 //map_utils
 char	*fill_line(int fd);
+int		get_code(char *code, int id);
+int		check_rgb(char *code, int id);
 
 //parse_path
 int		parse_path(void);

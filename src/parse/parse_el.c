@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:45 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/09 16:33:21 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:41:39 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	el_filled(void)
 	i = -1;
 	while (++i < 6)
 	{
-		if (!map()->elements[i])
+		if (!map()->elements[i] || !map()->elements[i][0])
 			return (0);
 	}
 	return (1);
@@ -103,4 +103,5 @@ int	fill_el(char *file)
 			return (-1);
 		}
 	}
+	return (0);
 }

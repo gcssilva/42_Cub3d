@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/09 16:23:48 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:52:00 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_ext(char *file)
 	if (ft_strlen(file) < 5)
 		return (0);
 	file += ft_strlen(file) - 4;
-	if (!ft_strncmp(file, ".cub", 5))
+	if (!ft_strncmp(file, ".cub\0", 5))
 		return (1);
 	return (0);
 }
@@ -38,6 +38,7 @@ int	fill_map(char *file)
 	i = 0;
 	if (fill_el(file) == -1 || check_img() == -1)
 		return (-1);
+	
 	fd = open(file, O_RDONLY);
 	while (i++ <= map()->last_elem)
 	{
@@ -84,6 +85,8 @@ int	parse_map(void)
 		}
 	}
 	if (map()->p == 0)
+		return (-1);
+	if (check_rgb(map()->elements[4], 'F') || check_rgb(map()->elements[5], 0))
 		return (-1);
 	return (parse_path());
 }

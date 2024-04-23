@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:14 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/09 16:23:22 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:52:38 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	main(int argc, char **argv)
 	int	i;
 
 	if (!check_ext(argv[1]))
+	{
 		ft_printf("Invalid map file extension\n");
+		return (0);
+	}
 	if (fill_map(argv[1]) == -1)
 		ft_printf("Invalid map\n");
 	else
