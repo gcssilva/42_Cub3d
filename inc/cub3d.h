@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/23 15:33:30 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/26 16:46:35 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 # include <fcntl.h>
 # include "libft.h"
 # include "../mlx/mlx.h"
+
+typedef struct s_img
+{
+	int	*addr;
+	int	*px_data;
+	int	bpp;
+	int	line_len;
+	int	endian;
+}	t_img;
 
 typedef struct s_map
 {
@@ -35,10 +44,10 @@ typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	void	*no_tex;
-	void	*so_tex;
-	void	*ea_tex;
-	void	*we_tex;
+	t_img	*n;
+	t_img	*s;
+	t_img	*e;
+	t_img	*w;
 }	t_mlx;
 
 t_mlx	*mlx(void);
