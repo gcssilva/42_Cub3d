@@ -6,11 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/23 15:52:00 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/29 14:00:33 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+
+int	check_ext(char *file);
+int	ft_isspace(int c);
+int	fill_map(char *file);
+int	is_valid_char(int c);
+int	parse_map(void);
 
 int	check_ext(char *file)
 {

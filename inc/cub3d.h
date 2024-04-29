@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/26 16:46:35 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/29 14:48:52 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 
 typedef struct s_img
 {
-	int	*addr;
-	int	*px_data;
-	int	bpp;
-	int	line_len;
-	int	endian;
+	int		w;
+	int		*addr;
+	int		*px_data;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	void	*img;
 }	t_img;
 
 typedef struct s_map
@@ -40,6 +42,12 @@ typedef struct s_map
 	int		f_rgb[3];
 }	t_map;
 
+typedef struct s_win
+{
+	int		**px_data;
+	t_img	*img;
+}	t_win;
+
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -50,6 +58,7 @@ typedef struct s_mlx
 	t_img	*w;
 }	t_mlx;
 
+t_win	*win(void);
 t_mlx	*mlx(void);
 t_map	*map(void);
 
@@ -57,11 +66,12 @@ t_map	*map(void);
 int		check_ext(char *file);
 int		ft_isspace(int c);
 int		fill_map(char *file);
-int		parse_map(void);
 int		is_valid_char(int c);
+int		parse_map(void);
 
 //map_utils
 char	*fill_line(int fd);
+int		rgb_char(char *s);
 int		get_code(char *code, int id);
 int		check_rgb(char *code, int id);
 
@@ -78,7 +88,10 @@ int		check_el(char *s, int l);
 int		fill_el(char *file);
 
 //image.c
-void	create_img(void);
+void	init_px_data(void);
+void	img_px_data(t_img *img, int size);
+t_img	*create_img(char *path);
 int		check_img(void);
+void	create_scene(void);
 
 #endif

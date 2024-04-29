@@ -6,11 +6,15 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 17:54:00 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/18 23:43:44 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/29 14:01:25 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+
+int	parse_path(void);
+int	inv_path(int c);
+int	find_path(int y, int x);
 
 int	parse_path(void)
 {

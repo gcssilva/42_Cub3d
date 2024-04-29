@@ -6,11 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:45 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/23 15:41:39 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/29 16:17:48 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+
+int	map_lines(int l);
+int	el_filled(void);
+int	add_el(char *s, int i, int l);
+int	check_el(char *s, int l);
+int	fill_el(char *file);
 
 int	map_lines(int l)
 {

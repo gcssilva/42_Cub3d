@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:14 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/23 15:52:38 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/29 14:12:37 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ t_mlx	*mlx(void)
 	static t_mlx	_mlx;
 
 	return (&_mlx);
+}
+
+t_win	*win(void)
+{
+	static t_win	_win;
+
+	return (&_win);
 }
 
 t_map	*map(void)

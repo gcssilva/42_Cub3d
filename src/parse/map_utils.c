@@ -6,11 +6,16 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:48:39 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/23 15:45:12 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:58:20 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+
+char	*fill_line(int fd);
+int		rgb_char(char *s);
+int		get_code(char *code, int id);
+int		check_rgb(char *code, int id);
 
 char	*fill_line(int fd)
 {
@@ -38,6 +43,7 @@ int	rgb_char(char *s)
 			return (-1);
 	}
 }
+
 int	get_code(char *code, int id)
 {
 	int	*rgb;

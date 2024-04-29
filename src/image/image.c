@@ -6,11 +6,27 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 15:37:48 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/26 16:49:53 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/04/29 15:58:54 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+
+void	init_px_data(void);
+void	img_px_data(t_img *img, int size);
+t_img	*create_img(char *path);
+int		check_img(void);
+void	create_scene(void);
+
+void	init_px_data(void)
+{
+	int	i;
+	
+	i = -1;
+	win()->px_data = ft_calloc(641, sizeof(int *));
+	while (++i < 640)
+		win()->px_data[i] = ft_calloc(641, sizeof(int));
+}
 
 void	img_px_data(t_img *img, int size)
 {
@@ -40,6 +56,8 @@ t_img	*create_img(char *path)
 	img = (t_img *)malloc(sizeof(t_img));
 	img->addr = mlx_get_data_addr(mlx_img, &img->bpp, &img->line_len, &img->endian);
 	mlx_destroy_image(mlx()->mlx, mlx_img);
+	img_px_data(img, size);
+	img->w = size;
 	return (img);
 }
 
@@ -54,4 +72,9 @@ int	check_img(void)
 	return (0);
 }
 
-
+void	create_scene(void)
+{
+	win()->img->img = mlx_new_image(mlx()->mlx, 640, 640);
+	win()->img->addr = (int *)mlx_get_data_addr(win()->img->img, &win()->img->bpp, &win()->img->line_len, &win()->img->endian);
+	win()->img->w = 640;
+}
