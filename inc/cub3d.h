@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/29 14:48:52 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/01 20:18:52 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,30 @@
 # include <fcntl.h>
 # include "libft.h"
 # include "../mlx/mlx.h"
+
+typedef struct s_coord
+{
+	double	x;
+	double	y;
+}	t_coord;
+
+typedef struct s_plr
+{
+	int		stepX;
+	int		stepY;
+	int		mapX;
+	int		mapY;
+	int		hit;
+	int		side;
+	double	cam;
+	double	perpWallDist;
+	t_coord	pos;
+	t_coord	dir;
+	t_coord	plane;
+	t_coord	rayDir;
+	t_coord	deltaDist;
+	t_coord	sideDist;
+}	t_plr;
 
 typedef struct s_img
 {
@@ -58,6 +82,7 @@ typedef struct s_mlx
 	t_img	*w;
 }	t_mlx;
 
+t_plr	*plr(void);
 t_win	*win(void);
 t_mlx	*mlx(void);
 t_map	*map(void);

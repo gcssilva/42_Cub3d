@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/29 14:00:33 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/01 19:45:51 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ int	parse_map(void)
 		j = -1;
 		while (map()->map[i][++j])
 		{
+			if (map()->p == 0)
+			{
+				plr()->mapY = i;
+				plr()->mapX = j;
+			}
 			if (!is_valid_char(map()->map[i][j]))
 				return (-1);
 		}
