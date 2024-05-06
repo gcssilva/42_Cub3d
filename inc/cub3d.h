@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/01 20:18:52 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/06 19:29:57 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,20 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <math.h>
 # include <fcntl.h>
 # include "libft.h"
 # include "../mlx/mlx.h"
+
+typedef struct s_keys
+{
+	int	w;
+	int	s;
+	int	d;
+	int	a;
+	int	l;
+	int	r;
+}	t_keys;
 
 typedef struct s_coord
 {
@@ -27,12 +38,17 @@ typedef struct s_coord
 
 typedef struct s_plr
 {
-	int		stepX;
-	int		stepY;
+	t_keys	key;
 	int		mapX;
 	int		mapY;
+	int		stepX;
+	int		stepY;
 	int		hit;
 	int		side;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	double	wall;
 	double	cam;
 	double	perpWallDist;
 	t_coord	pos;
@@ -118,5 +134,10 @@ void	img_px_data(t_img *img, int size);
 t_img	*create_img(char *path);
 int		check_img(void);
 void	create_scene(void);
+
+//utils.c
+void	walk_ns(int flag);
+void	walk_ew(int flag);
+void	rotate(int flag);
 
 #endif
