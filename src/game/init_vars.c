@@ -6,11 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 19:48:58 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/01 20:13:06 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/07 20:37:24 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+
+void	vert(int p);
+void	hor(int p);
+void	init_vars(void);
+void	start_game(void);
+void	paint_scene(void);
 
 void	vert(int p)
 {
@@ -36,11 +42,47 @@ void	hor(int p)
 
 void	init_vars(void)
 {
+	mlx()->win = mlx_new_window(mlx()->mlx, 640, 480, "cub3d");
+	win()->img = (t_img *)malloc(sizeof(t_img));
+	win()->img->img = mlx_new_image(mlx()->mlx, 640, 480);
+	win()->img->addr = (int *)mlx_get_data_addr(win()->img->img, &win()->img->bpp, &win()->img->line_len, &win()->img->endian);
 	if (map()->p == 'N' || map()->p == 'S')
 		vert(map()->p);
 	else
 		hor(map()->p);
-	plr()->pos.x = (double)plr()->mapX;
-	plr()->pos.y = (double)plr()->mapY;
+	plr()->pos.x = plr()->mapX + 0.5;
+	plr()->pos.y = plr()->mapY + 0.5;
 	plr()->hit = 0;
+}
+
+void	start_game(void)
+{
+	init_vars();
+	main_loop();
+	mlx_hook(mlx()->win, KeyPress, KeyPressMask, press, mlx()->win);
+	mlx_hook(mlx()->win, KeyRelease, KeyReleaseMask, release, mlx()->win);
+	mlx_loop_hook(mlx()->mlx, main_loop, mlx()->win);
+	mlx_loop(mlx()->mlx);
+}
+
+void	paint_scene(void)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < 480)
+	{
+		j = -1;
+		while (++j < 640)
+		{
+			if (win()->px_data[i][j] > 0)
+				set_px(j, i, win()->px_data[i][j]);
+			else if (i < 240)
+				set_px(j, i, map()->c_rgb[0] * 65536 + map()->c_rgb[1] * 256 + map()->c_rgb[2]);
+			else
+				set_px(j, i, map()->f_rgb[0] * 65536 + map()->f_rgb[1] * 256 + map()->f_rgb[2]);
+		}
+	}
+	mlx_put_image_to_window(mlx()->mlx, mlx()->win, win()->img->img, 0, 0);
 }

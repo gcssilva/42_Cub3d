@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 15:37:48 by gsilva            #+#    #+#             */
-/*   Updated: 2024/04/29 15:58:54 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/07 20:12:19 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ t_img	*create_img(char *path)
 	if (!mlx_img)
 		return (0);
 	img = (t_img *)malloc(sizeof(t_img));
-	img->addr = mlx_get_data_addr(mlx_img, &img->bpp, &img->line_len, &img->endian);
-	mlx_destroy_image(mlx()->mlx, mlx_img);
+	img->addr = (int *)mlx_get_data_addr(mlx_img, &img->bpp, &img->line_len, &img->endian);
 	img_px_data(img, size);
 	img->w = size;
 	return (img);

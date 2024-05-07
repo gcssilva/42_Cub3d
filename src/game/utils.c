@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:55:36 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/06 19:42:19 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/07 20:49:15 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	walk_ns(int flag);
 void	walk_ew(int flag);
 void	rotate(int flag);
+t_img	*tex_calc(void);
+void	set_scene(t_img *img, int x);
 
 void	walk_ns(int flag)
 {
@@ -22,20 +24,18 @@ void	walk_ns(int flag)
 
 	if (flag == 1)
 	{
-		pos.x = plr()->pos.x + plr()->dir.x * 0.05;
-		pos.y = plr()->pos.y + plr()->dir.y * 0.05;
+		if (map()->map[(int)plr()->pos.y][(int)(plr()->pos.x + plr()->dir.x * 0.005)] != '1')
+			plr()->pos.x += plr()->dir.x * 0.005;
+		if (map()->map[(int)(plr()->pos.y + plr()->dir.y * 0.005)][(int)plr()->pos.x] != '1')
+			plr()->pos.y += plr()->dir.y * 0.005;
 	}
 	else
 	{
-		pos.x = plr()->pos.x - plr()->dir.x * 0.05;
-		pos.y = plr()->pos.y - plr()->dir.y * 0.05;
+		if (map()->map[(int)plr()->pos.y][(int)(plr()->pos.x - plr()->dir.x * 0.005)] != '1')
+			plr()->pos.x -= plr()->dir.x * 0.005;
+		if (map()->map[(int)(plr()->pos.y - plr()->dir.y * 0.005)][(int)plr()->pos.x] != '1')
+			plr()->pos.y -= plr()->dir.y * 0.005;
 	}
-	if (map()->map[(int)floor(pos.y)][(int)floor(pos.x)] == '1')
-		return ;
-	if (map()->map[(int)(plr()->pos.y + plr()->dir.y * 0.05)][(int)plr()->pos.x] != '1')
-		plr()->pos.y += plr()->dir.y * 0.05 * flag;
-	if (map()->map[(int)plr()->pos.y][(int)(plr()->pos.x + plr()->dir.x * 0.05)] != '1')
-		plr()->pos.x += plr()->dir.x * 0.05 * flag;
 }
 
 void	walk_ew(int flag)
@@ -44,20 +44,18 @@ void	walk_ew(int flag)
 
 	if (flag == 1)
 	{
-		pos.x = plr()->pos.x + plr()->plane.x * 0.05;
-		pos.y = plr()->pos.y + plr()->plane.y * 0.05;
+		if (map()->map[(int)plr()->pos.y][(int)(plr()->pos.x + plr()->plane.x * 0.005)] != '1')
+			plr()->pos.x += plr()->plane.x * 0.005;
+		if (map()->map[(int)(plr()->pos.y + plr()->plane.y * 0.005)][(int)plr()->pos.x] != '1')
+			plr()->pos.y += plr()->plane.y * 0.005;
 	}
 	else
 	{
-		pos.x = plr()->pos.x - plr()->plane.x * 0.05;
-		pos.y = plr()->pos.y - plr()->plane.y * 0.05;
+		if (map()->map[(int)plr()->pos.y][(int)(plr()->pos.x - plr()->plane.x * 0.005)] != '1')
+			plr()->pos.x -= plr()->plane.x * 0.005;
+		if (map()->map[(int)(plr()->pos.y - plr()->plane.y * 0.005)][(int)plr()->pos.x] != '1')
+			plr()->pos.y -= plr()->plane.y * 0.005;
 	}
-	if (map()->map[(int)floor(pos.y)][(int)floor(pos.x)] == '1')
-		return ;
-	if (map()->map[(int)(plr()->pos.y + plr()->plane.y * 0.05)][(int)plr()->pos.x] != '1')
-		plr()->pos.y += plr()->plane.y * 0.05 * flag;
-	if (map()->map[(int)plr()->pos.y][(int)(plr()->pos.x + plr()->plane.x * 0.05)] != '1')
-		plr()->pos.x += plr()->plane.x * 0.05 * flag;
 }
 
 void	rotate(int flag)
@@ -73,18 +71,49 @@ void	rotate(int flag)
 	plr()->plane.y = tmp_plane * sin(flag * 0.04) + plr()->plane.y * cos(flag * 0.04);
 }
 
-void	tex_calc(void)
+t_img	*tex_calc(void)
 {
-	plr()->lineHeight = (int)(640 / plr()->perpWallDist);
-	plr()->drawStart = -plr()->lineHeight / 2 + 640 / 2;
+	plr()->lineHeight = (int)(480 / plr()->perpWallDist);
+	if (!plr()->lineHeight)
+		plr()->lineHeight = 1;
+	plr()->drawStart = -(plr()->lineHeight) / 2 + 480 / 2;
 	if (plr()->drawStart < 0)
 		plr()->drawStart = 0;
-	plr()->drawEnd = plr()->lineHeight / 2 + 640 / 2;
-	if (plr()->drawEnd >= 640)
-		plr()->drawEnd = 640 - 1;
+	plr()->drawEnd = plr()->lineHeight / 2 + 480 / 2;
+	if (plr()->drawEnd >= 480)
+		plr()->drawEnd = 480 - 1;
 	if (plr()->side == 0)
 		plr()->wall = plr()->pos.y + plr()->perpWallDist * plr()->rayDir.y;
 	else
 		plr()->wall = plr()->pos.x + plr()->perpWallDist * plr()->rayDir.x;
-	plr()->wall -= floor(plr()->wall);
+	plr()->wall -= floor((plr()->wall));
+	if (plr()->side && plr()->rayDir.y <= 0)
+		return (mlx()->n);
+	if (plr()->side && plr()->rayDir.y > 0)
+		return (mlx()->s);
+	if (!plr()->side && plr()->rayDir.x >= 0)
+		return (mlx()->e);
+	if (!plr()->side && plr()->rayDir.x < 0)
+		return (mlx()->w);
+	return (NULL);
+}
+
+void	set_scene(t_img *img, int x)
+{
+	int	y;
+	
+	img->x = (int)(plr()->wall * (double)img->w);
+	if ((!plr()->side && plr()->rayDir.x < 0) || (plr()->side && plr()->rayDir.y > 0))
+		img->x = img->w - img->x - 1;
+	img->step = (double)(img->w / plr()->lineHeight);
+	img->pos = (plr()->drawStart - 480 / 2 + plr()->lineHeight / 2) * img->step;
+	y = plr()->drawStart;
+	while (y < plr()->drawEnd)
+	{
+		img->y = (int)img->pos & (img->w - 1);
+		img->pos += img->step;
+		if (win()->px_data[img->w * img->y + img->x] > 0)
+			win()->px_data[y][x] = img->px_data[img->w * img->y + img->x];
+		y++;
+	}
 }

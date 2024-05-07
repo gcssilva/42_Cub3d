@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/06 19:29:57 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/07 19:40:04 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <stdint.h>
 # include <math.h>
 # include <fcntl.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include "libft.h"
 # include "../mlx/mlx.h"
 
@@ -67,6 +71,10 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		x;
+	int		y;
+	double	step;
+	double	pos;
 	void	*img;
 }	t_img;
 
@@ -86,6 +94,7 @@ typedef struct s_win
 {
 	int		**px_data;
 	t_img	*img;
+	t_img	**tex;
 }	t_win;
 
 typedef struct s_mlx
@@ -139,5 +148,29 @@ void	create_scene(void);
 void	walk_ns(int flag);
 void	walk_ew(int flag);
 void	rotate(int flag);
+t_img	*tex_calc(void);
+void	set_scene(t_img *img, int x);
+
+//ray_cast.c
+int		main_loop(void);
+void	raycast(void);
+void	get_pos(int x);
+void	step(void);
+void	dda(void);
+
+//hooks.c
+int		press(int keycode);
+int		release(int keycode);
+
+//init_vars.c
+void	vert(int p);
+void	hor(int p);
+void	init_vars(void);
+void	start_game(void);
+void	paint_scene(void);
+
+//utils2.c
+void	set_px(int i, int j, int color);
+void	new_px_data(void);
 
 #endif

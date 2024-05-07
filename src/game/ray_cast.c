@@ -6,11 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:30:21 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/06 18:41:36 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/07 20:22:26 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+
+int		main_loop(void);
+void	raycast(void);
+void	get_pos(int x);
+void	step(void);
+void	dda(void);
 
 int	main_loop(void)
 {
@@ -23,20 +29,31 @@ int	main_loop(void)
 	if (plr()->key.a)
 		walk_ew(-1);
 	if (plr()->key.r)
-		rotate(1);
-	if (plr()->key.l)
 		rotate(-1);
+	if (plr()->key.l)
+		rotate(1);
 	raycast();
 }
 
 void	raycast(void)
 {
-	
+	int	x;
+
+	x = -1;
+	new_px_data();
+	while (++x < 640)
+	{
+		get_pos(x);
+		step();
+		dda();
+		set_scene(tex_calc(), x);
+	}
+	paint_scene();
 }
 
 void	get_pos(int x)
 {
-	plr()->cam = 2 * x / 639.0;
+	plr()->cam = 2 * x / 640.0 - 1;
 	plr()->rayDir.x = plr()->dir.x + plr()->plane.x * plr()->cam;
 	plr()->rayDir.y = plr()->dir.y + plr()->plane.y * plr()->cam;
 	plr()->deltaDist.x = fabs(1 / plr()->rayDir.x);
@@ -50,7 +67,7 @@ void	step(void)
 	if (plr()->rayDir.x < 0)
 	{
 		plr()->stepX = -1;
-		plr()->sideDist.x = (plr()->pos.x - (double)plr()->mapX) * plr()->deltaDist.x;
+		plr()->sideDist.x = (plr()->pos.x - plr()->mapX) * plr()->deltaDist.x;
 	}
 	else
 	{

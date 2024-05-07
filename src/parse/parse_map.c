@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/01 19:45:51 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:26:07 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	fill_map(char *file)
 	i = 0;
 	if (fill_el(file) == -1 || check_img() == -1)
 		return (-1);
-	
 	fd = open(file, O_RDONLY);
 	while (i++ <= map()->last_elem)
 	{
