@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:18:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/07 16:45:51 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/08 14:29:10 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	press(int keycode)
 		plr()->key.l = 1;
 	if (keycode == XK_Right)
 		plr()->key.r = 1;
-	main_loop();
 	return (0);
 }
 
@@ -51,6 +50,5 @@ int	release(int keycode)
 		plr()->key.l = 0;
 	if (keycode == XK_Right)
 		plr()->key.r = 0;
-	main_loop();
 	return (0);
 }

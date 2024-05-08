@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:30:21 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/07 20:22:26 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:37:25 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main_loop(void)
 void	raycast(void)
 {
 	int	x;
+	t_img	*img;
 
 	x = -1;
 	new_px_data();
@@ -46,20 +47,22 @@ void	raycast(void)
 		get_pos(x);
 		step();
 		dda();
-		set_scene(tex_calc(), x);
+		img = tex_calc();
+		set_scene(img, x);
 	}
 	paint_scene();
 }
 
 void	get_pos(int x)
 {
-	plr()->cam = 2 * x / 640.0 - 1;
+	plr()->cam = 2 * x / (double)640 - 1;
 	plr()->rayDir.x = plr()->dir.x + plr()->plane.x * plr()->cam;
 	plr()->rayDir.y = plr()->dir.y + plr()->plane.y * plr()->cam;
-	plr()->deltaDist.x = fabs(1 / plr()->rayDir.x);
-	plr()->deltaDist.y = fabs(1 / plr()->rayDir.y);
 	plr()->mapX = (int)plr()->pos.x;
 	plr()->mapY = (int)plr()->pos.y;
+	plr()->deltaDist.x = fabs(1 / plr()->rayDir.x);
+	plr()->deltaDist.y = fabs(1 / plr()->rayDir.y);
+	plr()->hit = 0;
 }
 
 void	step(void)
@@ -72,17 +75,17 @@ void	step(void)
 	else
 	{
 		plr()->stepX = 1;
-		plr()->sideDist.x = ((double)plr()->mapX + 1.0 - plr()->pos.x) * plr()->deltaDist.x;
+		plr()->sideDist.x = (plr()->mapX + 1.0 - plr()->pos.x) * plr()->deltaDist.x;
 	}
 	if (plr()->rayDir.y < 0)
 	{
 		plr()->stepY = -1;
-		plr()->sideDist.y = (plr()->pos.y - (double)plr()->mapY) * plr()->deltaDist.y;
+		plr()->sideDist.y = (plr()->pos.y - plr()->mapY) * plr()->deltaDist.y;
 	}
 	else
 	{
 		plr()->stepY = 1;
-		plr()->sideDist.y = ((double)plr()->mapY + 1.0 - plr()->pos.y) * plr()->deltaDist.y;
+		plr()->sideDist.y = (plr()->mapY + 1.0 - plr()->pos.y) * plr()->deltaDist.y;
 	}
 }
 
@@ -109,4 +112,6 @@ void	dda(void)
 		plr()->perpWallDist = plr()->sideDist.x - plr()->deltaDist.x;
 	else
 		plr()->perpWallDist = plr()->sideDist.y - plr()->deltaDist.y;
+	if (plr()->perpWallDist < 0.0001)
+		plr()->perpWallDist = 0.0001;
 }

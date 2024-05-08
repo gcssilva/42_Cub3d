@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/07 19:40:04 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/08 13:30:18 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void	start_game(void);
 void	paint_scene(void);
 
 //utils2.c
-void	set_px(int i, int j, int color);
+void	set_px(int x, int y, int color);
 void	new_px_data(void);
 
 #endif

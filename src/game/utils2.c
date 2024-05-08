@@ -6,20 +6,20 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:56:41 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/07 20:37:47 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/08 13:29:51 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-void	set_px(int i, int j, int color);
+void	set_px(int x, int y, int color);
 void	new_px_data(void);
 
-void	set_px(int i, int j, int color)
+void	set_px(int x, int y, int color)
 {
 	int	px;
 
-	px = j * (win()->img->line_len / 4) + i;
+	px = y * (win()->img->line_len / 4) + x;
 	win()->img->addr[px] = color;
 }
 
