@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:55:36 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/12 01:16:52 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/12 01:33:57 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void	set_scene(t_img *img, int x)
 		|| (plr()->side && plr()->ray_dir.y > 0))
 		img->x = img->w - img->x - 1;
 	img->step = 1.0 * img->w / plr()->line_height;
-	img->pos = (plr()->draw_start - 480 / 2 + plr()->line_height / 2) * img->step;
+	img->pos = (plr()->draw_start - 480 / 2 + plr()->line_height / 2)
+		* img->step;
 	y = plr()->draw_start;
 	while (y < plr()->draw_end)
 	{
