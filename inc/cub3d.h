@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:31:25 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/08 13:30:18 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/12 01:12:32 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,24 @@ typedef struct s_coord
 typedef struct s_plr
 {
 	t_keys	key;
-	int		mapX;
-	int		mapY;
-	int		stepX;
-	int		stepY;
+	int		mapx;
+	int		mapy;
+	int		stepx;
+	int		stepy;
 	int		hit;
 	int		side;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
 	double	wall;
 	double	cam;
-	double	perpWallDist;
+	double	perp_wall_dist;
 	t_coord	pos;
 	t_coord	dir;
 	t_coord	plane;
-	t_coord	rayDir;
-	t_coord	deltaDist;
-	t_coord	sideDist;
+	t_coord	ray_dir;
+	t_coord	delta_dist;
+	t_coord	side_dist;
 }	t_plr;
 
 typedef struct s_img
@@ -94,7 +94,6 @@ typedef struct s_win
 {
 	int		**px_data;
 	t_img	*img;
-	t_img	**tex;
 }	t_win;
 
 typedef struct s_mlx
@@ -112,65 +111,77 @@ t_win	*win(void);
 t_mlx	*mlx(void);
 t_map	*map(void);
 
-//parse_map
-int		check_ext(char *file);
-int		ft_isspace(int c);
+//parse/ parse_map.c
 int		fill_map(char *file);
+char	*fill_line(int fd);
 int		is_valid_char(int c);
 int		parse_map(void);
 
-//map_utils
-char	*fill_line(int fd);
+//parse/ map_utils.c
 int		rgb_char(char *s);
 int		get_code(char *code, int id);
 int		check_rgb(char *code, int id);
 
-//parse_path
+//parse/ parse_path.c
 int		parse_path(void);
 int		inv_path(int c);
 int		find_path(int y, int x);
 
-//parse_el
-int		map_lines(int l);
+//parse/ parse_el
 int		el_filled(void);
 int		add_el(char *s, int i, int l);
 int		check_el(char *s, int l);
-int		fill_el(char *file);
+int		fill_el(char *file, int l);
+int		aux_el(char *file);
 
-//image.c
+//parse/ parse_utils.c
+int		map_lines(int l);
+int		check_ext(char *file);
+int		ft_isspace(int c);
+int		ft_strlen_nl(char *str);
+int		error(char *str);
+
+//image/ image.c
 void	init_px_data(void);
 void	img_px_data(t_img *img, int size);
 t_img	*create_img(char *path);
 int		check_img(void);
 void	create_scene(void);
 
-//utils.c
+//game/ utils.c
 void	walk_ns(int flag);
 void	walk_ew(int flag);
 void	rotate(int flag);
 t_img	*tex_calc(void);
 void	set_scene(t_img *img, int x);
 
-//ray_cast.c
+//game/ ray_cast.c
 int		main_loop(void);
 void	raycast(void);
 void	get_pos(int x);
 void	step(void);
 void	dda(void);
 
-//hooks.c
+//game/ hooks.c
 int		press(int keycode);
 int		release(int keycode);
+int		key_close(void);
 
-//init_vars.c
+//game/ init_vars.c
 void	vert(int p);
 void	hor(int p);
 void	init_vars(void);
 void	start_game(void);
 void	paint_scene(void);
 
-//utils2.c
+//game/ utils2.c
 void	set_px(int x, int y, int color);
 void	new_px_data(void);
+int		*aux_get_add(void);
+
+//game/ close_game.c
+void	close_map(void);
+void	close_imgs(t_img *img);
+void	finish_exec(void);
 
 #endif

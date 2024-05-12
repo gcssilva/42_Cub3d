@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:30:21 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/08 17:37:25 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/12 01:17:23 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ int	main_loop(void)
 	if (plr()->key.l)
 		rotate(1);
 	raycast();
+	return (0);
 }
 
 void	raycast(void)
 {
-	int	x;
+	int		x;
 	t_img	*img;
 
 	x = -1;
@@ -56,36 +57,38 @@ void	raycast(void)
 void	get_pos(int x)
 {
 	plr()->cam = 2 * x / (double)640 - 1;
-	plr()->rayDir.x = plr()->dir.x + plr()->plane.x * plr()->cam;
-	plr()->rayDir.y = plr()->dir.y + plr()->plane.y * plr()->cam;
-	plr()->mapX = (int)plr()->pos.x;
-	plr()->mapY = (int)plr()->pos.y;
-	plr()->deltaDist.x = fabs(1 / plr()->rayDir.x);
-	plr()->deltaDist.y = fabs(1 / plr()->rayDir.y);
+	plr()->ray_dir.x = plr()->dir.x + plr()->plane.x * plr()->cam;
+	plr()->ray_dir.y = plr()->dir.y + plr()->plane.y * plr()->cam;
+	plr()->mapx = (int)plr()->pos.x;
+	plr()->mapy = (int)plr()->pos.y;
+	plr()->delta_dist.x = fabs(1 / plr()->ray_dir.x);
+	plr()->delta_dist.y = fabs(1 / plr()->ray_dir.y);
 	plr()->hit = 0;
 }
 
 void	step(void)
 {
-	if (plr()->rayDir.x < 0)
+	if (plr()->ray_dir.x < 0)
 	{
-		plr()->stepX = -1;
-		plr()->sideDist.x = (plr()->pos.x - plr()->mapX) * plr()->deltaDist.x;
+		plr()->stepx = -1;
+		plr()->side_dist.x = (plr()->pos.x - plr()->mapx) * plr()->delta_dist.x;
 	}
 	else
 	{
-		plr()->stepX = 1;
-		plr()->sideDist.x = (plr()->mapX + 1.0 - plr()->pos.x) * plr()->deltaDist.x;
+		plr()->stepx = 1;
+		plr()->side_dist.x = (plr()->mapx + 1.0 \
+		- plr()->pos.x) * plr()->delta_dist.x;
 	}
-	if (plr()->rayDir.y < 0)
+	if (plr()->ray_dir.y < 0)
 	{
-		plr()->stepY = -1;
-		plr()->sideDist.y = (plr()->pos.y - plr()->mapY) * plr()->deltaDist.y;
+		plr()->stepy = -1;
+		plr()->side_dist.y = (plr()->pos.y - plr()->mapy) * plr()->delta_dist.y;
 	}
 	else
 	{
-		plr()->stepY = 1;
-		plr()->sideDist.y = (plr()->mapY + 1.0 - plr()->pos.y) * plr()->deltaDist.y;
+		plr()->stepy = 1;
+		plr()->side_dist.y = (plr()->mapy + 1.0 - plr()->pos.y) \
+		* plr()->delta_dist.y;
 	}
 }
 
@@ -93,25 +96,25 @@ void	dda(void)
 {
 	while (plr()->hit == 0)
 	{
-		if (plr()->sideDist.x < plr()->sideDist.y)
+		if (plr()->side_dist.x < plr()->side_dist.y)
 		{
-			plr()->sideDist.x += plr()->deltaDist.x;
-			plr()->mapX += plr()->stepX;
+			plr()->side_dist.x += plr()->delta_dist.x;
+			plr()->mapx += plr()->stepx;
 			plr()->side = 0;
 		}
 		else
 		{
-			plr()->sideDist.y += plr()->deltaDist.y;
-			plr()->mapY += plr()->stepY;
+			plr()->side_dist.y += plr()->delta_dist.y;
+			plr()->mapy += plr()->stepy;
 			plr()->side = 1;
 		}
-		if (map()->map[plr()->mapY][plr()->mapX] == '1')
+		if (map()->map[plr()->mapy][plr()->mapx] == '1')
 			plr()->hit = 1;
 	}
 	if (plr()->side == 0)
-		plr()->perpWallDist = plr()->sideDist.x - plr()->deltaDist.x;
+		plr()->perp_wall_dist = plr()->side_dist.x - plr()->delta_dist.x;
 	else
-		plr()->perpWallDist = plr()->sideDist.y - plr()->deltaDist.y;
-	if (plr()->perpWallDist < 0.0001)
-		plr()->perpWallDist = 0.0001;
+		plr()->perp_wall_dist = plr()->side_dist.y - plr()->delta_dist.y;
+	if (plr()->perp_wall_dist < 0.0001)
+		plr()->perp_wall_dist = 0.0001;
 }

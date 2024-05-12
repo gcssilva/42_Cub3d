@@ -6,23 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:33:45 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/07 15:39:57 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/12 01:09:09 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-int	map_lines(int l);
 int	el_filled(void);
 int	add_el(char *s, int i, int l);
 int	check_el(char *s, int l);
-int	fill_el(char *file);
-
-int	map_lines(int l)
-{
-	map()->lines = l - map()->last_elem;
-	return (0);
-}
+int	fill_el(char *file, int l);
+int	aux_el(char *file);
 
 int	el_filled(void)
 {
@@ -64,7 +58,7 @@ int	check_el(char *s, int l)
 
 	i = 10;
 	while (ft_isspace(*s))
-		*s++;
+		s++;
 	if (!ft_strncmp(s, "NO ", 3))
 		i = 0;
 	else if (!ft_strncmp(s, "SO ", 3))
@@ -82,16 +76,12 @@ int	check_el(char *s, int l)
 	return (add_el(s, i, l));
 }
 
-int	fill_el(char *file)
+int	fill_el(char *file, int l)
 {
 	char	*line;
 	int		fd;
-	int		l;
 
-	l = -1;
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (-1);
+	fd = aux_el(file);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -99,16 +89,27 @@ int	fill_el(char *file)
 		{
 			if (el_filled())
 				return (map_lines(l));
-			return (-1);
+			return (error("Missing elements"));
 		}
-		if (ft_strlen(line) > map()->max_len)
+		if ((int)ft_strlen(line) > map()->max_len)
 			map()->max_len = ft_strlen(line);
 		if (check_el(line, ++l) == -1)
 		{
 			free(line);
-			return (-1);
+			return (error("Wrong or missing element"));
 		}
 		free(line);
 	}
+	close(fd);
 	return (0);
+}
+
+int	aux_el(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		error("Opening the file");
+	return (fd);
 }

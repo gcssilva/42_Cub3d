@@ -6,34 +6,16 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:19:22 by gsilva            #+#    #+#             */
-/*   Updated: 2024/05/08 13:51:18 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/05/12 01:14:05 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-int	check_ext(char *file);
-int	ft_isspace(int c);
-int	fill_map(char *file);
-int	is_valid_char(int c);
-int	parse_map(void);
-
-int	check_ext(char *file)
-{
-	if (ft_strlen(file) < 5)
-		return (0);
-	file += ft_strlen(file) - 4;
-	if (!ft_strncmp(file, ".cub\0", 5))
-		return (1);
-	return (0);
-}
-
-int	ft_isspace(int c)
-{
-	if ((c >= 9 && c <= 12) || c == 32)
-		return (1);
-	return (0);
-}
+int		fill_map(char *file);
+char	*fill_line(int fd);
+int		is_valid_char(int c);
+int		parse_map(void);
 
 int	fill_map(char *file)
 {
@@ -42,15 +24,17 @@ int	fill_map(char *file)
 	char	*line;
 
 	i = 0;
-	if (fill_el(file) == -1 || check_img() == -1)
+	if (fill_el(file, -1) == -1 || check_img() == -1)
 		return (-1);
 	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		error("Opening the file");
 	while (i++ <= map()->last_elem)
 	{
 		line = get_next_line(fd);
 		free(line);
 	}
-	map()->map = (char **)malloc(sizeof(char *) * (map()->lines + 1));
+	map()->map = (char **)malloc(sizeof(char *) * (map()->lines + 2));
 	i = -1;
 	while (++i <= map()->lines)
 		map()->map[i] = fill_line(fd);
@@ -58,6 +42,24 @@ int	fill_map(char *file)
 	close(fd);
 	map()->p = 0;
 	return (parse_map());
+}
+
+char	*fill_line(int fd)
+{
+	char	*line;
+	char	*get_line;
+	int		i;
+
+	get_line = get_next_line(fd);
+	if (!get_line)
+		return (NULL);
+	line = (char *)calloc(map()->max_len + 1, sizeof(char));
+	i = -1;
+	while (get_line[++i])
+		line[i] = get_line[i];
+	line[i] = '\0';
+	free(get_line);
+	return (line);
 }
 
 int	is_valid_char(int c)
@@ -87,16 +89,16 @@ int	parse_map(void)
 		{
 			if (map()->p == 0)
 			{
-				plr()->mapY = i;
-				plr()->mapX = j;
+				plr()->mapy = i;
+				plr()->mapx = j;
 			}
 			if (!is_valid_char(map()->map[i][j]))
-				return (-1);
+				return (error("Invalid character in map"));
 		}
 	}
 	if (map()->p == 0)
-		return (-1);
+		return (error("Missing player"));
 	if (check_rgb(map()->elements[4], 'F') || check_rgb(map()->elements[5], 0))
-		return (-1);
+		return (error("Problem with rgb"));
 	return (parse_path());
 }
